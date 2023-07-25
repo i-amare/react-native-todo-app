@@ -15,11 +15,11 @@ export default function App() {
 
 	/**
 	 * Adds a Todo element to the list
-	 * @param todo A Todo item
+	 * @param todoItem A Todo item
 	 */
-	function addTodo(todo: Todo) {
+	function addTodo(todoItem: Todo) {
 		setList((prevList) => {
-			prevList.push(todo);
+			prevList.push(todoItem);
 			return prevList;
 		});
 		alert(list[list.length - 1].getTitle());
@@ -31,7 +31,7 @@ export default function App() {
 	 */
 	function removeTodo(id: string) {
 		setList((prevList) => {
-			return prevList?.filter((todo) => todo.getId() != id);
+			return prevList?.filter((todoItem) => todoItem.getId() != id);
 		});
 	}
 

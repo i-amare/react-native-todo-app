@@ -2,7 +2,7 @@ import { Todo } from "../types";
 import { TextInput, View } from "react-native";
 
 interface IInput {
-	addTodo: (todo: Todo) => void;
+	addTodo: (todoItem: Todo) => void;
 }
 
 export default function Input({ addTodo }: IInput) {
