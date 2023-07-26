@@ -32,6 +32,10 @@ export default function App() {
 		});
 	}
 
+	/**
+	 * Toggle the completed state of the todo item and moves it to the corrosponding list
+	 * @param todo The todo item
+	 */
 	function toggleTodo(todo: Todo) {
 		if (todo.isCompleted()) {
 			setList([todo, ...list]);
