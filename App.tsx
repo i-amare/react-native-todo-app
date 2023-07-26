@@ -12,6 +12,7 @@ import { Todo } from "./types";
 
 export default function App() {
 	const [list, setList] = useState<Todo[]>([]);
+	const [completedList, setCompletedList] = useState<Todo[]>([]);
 
 	/**
 	 * Adds a Todo element to the list
@@ -31,6 +32,21 @@ export default function App() {
 		});
 	}
 
+	function toggleTodo(todo: Todo) {
+		if (todo.isCompleted()) {
+			setList([todo, ...list]);
+			setCompletedList((prevList) => {
+				return prevList.filter((todoItem) => todoItem.getId() != todo.getId());
+			});
+		} else {
+			setCompletedList([todo, ...completedList]);
+			setList((prevList) => {
+				return prevList.filter((todoItem) => todoItem.getId() != todo.getId());
+			});
+		}
+		todo.toggleCompletion();
+	}
+
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			<View className='w-screen h-screen flex bg-black'>
@@ -43,17 +59,25 @@ export default function App() {
 						return item.isCompleted() ? (
 							<></>
 						) : (
-							<Card todoItem={item} removeItem={removeTodo} />
+							<Card
+								todoItem={item}
+								toggleTodo={toggleTodo}
+								removeItem={removeTodo}
+							/>
 						);
 					}}
 				/>
 				<FlatList
 					className='w-11/12 m-auto'
-					data={list}
+					data={completedList}
 					keyExtractor={(todoItem) => todoItem.getId()}
 					renderItem={({ item }) => {
 						return item.isCompleted() ? (
-							<Card todoItem={item} removeItem={removeTodo} />
+							<Card
+								todoItem={item}
+								toggleTodo={toggleTodo}
+								removeItem={removeTodo}
+							/>
 						) : (
 							<></>
 						);

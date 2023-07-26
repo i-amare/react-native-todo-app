@@ -4,14 +4,15 @@ import { Todo } from "../types";
 
 interface cardProps {
 	todoItem: Todo;
+	toggleTodo: (todoItem: Todo) => void;
 	removeItem: (id: string) => void;
 }
 
-export default function Card({ todoItem, removeItem }: cardProps) {
+export default function Card({ todoItem, removeItem, toggleTodo }: cardProps) {
 	return (
 		<TouchableHighlight
 			underlayColor='crimson'
-			onPress={() => todoItem.toggleCompletion()}
+			onPress={() => toggleTodo(todoItem)}
 			className='bg-slate-800 w-full p-6 rounded-md my-1 mx-auto font-bold'
 		>
 			{todoItem.isCompleted() ? (
