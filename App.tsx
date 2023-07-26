@@ -1,14 +1,14 @@
 import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 import {
-	Text,
-	View,
+	FlatList,
 	Keyboard,
-	TouchableOpacity,
 	TouchableWithoutFeedback,
+	View,
 } from "react-native";
+import Card from "./components/card";
 import Input from "./components/input";
 import { Todo } from "./types";
-import { useState } from "react";
 
 export default function App() {
 	const [list, setList] = useState<Todo[]>([]);
@@ -18,11 +18,7 @@ export default function App() {
 	 * @param todoItem A Todo item
 	 */
 	function addTodo(todoItem: Todo) {
-		setList((prevList) => {
-			prevList.push(todoItem);
-			return prevList;
-		});
-		alert(list[list.length - 1].getTitle());
+		setList([todoItem, ...list]);
 	}
 
 	/**
@@ -31,7 +27,7 @@ export default function App() {
 	 */
 	function removeTodo(id: string) {
 		setList((prevList) => {
-			return prevList?.filter((todoItem) => todoItem.getId() != id);
+			return prevList.filter((todoItem) => todoItem.getId() != id);
 		});
 	}
 
@@ -39,7 +35,15 @@ export default function App() {
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			<View className='w-screen h-screen flex bg-black'>
 				<Input addTodo={addTodo} />
-				{/* <StatusBar /> */}
+				<FlatList
+					className='w-11/12 m-auto'
+					data={list}
+					keyExtractor={(todoItem) => todoItem.getId()}
+					renderItem={({ item }) => (
+						<Card todoItem={item} removeItem={removeTodo} />
+					)}
+				/>
+				<StatusBar />
 			</View>
 		</TouchableWithoutFeedback>
 	);
