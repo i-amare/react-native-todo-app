@@ -11,7 +11,7 @@ export default function Card({ todoItem, removeItem }: cardProps) {
 	return (
 		<TouchableHighlight
 			underlayColor='crimson'
-			onPress={() => removeItem(todoItem.getId())}
+			onPress={() => todoItem.toggleCompletion()}
 			className='bg-slate-800 w-full p-6 rounded-md my-1 mx-auto font-bold'
 		>
 			{todoItem.isCompleted() ? (

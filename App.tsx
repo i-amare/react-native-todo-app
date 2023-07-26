@@ -36,12 +36,28 @@ export default function App() {
 			<View className='w-screen h-screen flex bg-black'>
 				<Input addTodo={addTodo} />
 				<FlatList
+					className='w-11/12 m-auto h-min'
+					data={list}
+					keyExtractor={(todoItem) => todoItem.getId()}
+					renderItem={({ item }) => {
+						return item.isCompleted() ? (
+							<></>
+						) : (
+							<Card todoItem={item} removeItem={removeTodo} />
+						);
+					}}
+				/>
+				<FlatList
 					className='w-11/12 m-auto'
 					data={list}
 					keyExtractor={(todoItem) => todoItem.getId()}
-					renderItem={({ item }) => (
-						<Card todoItem={item} removeItem={removeTodo} />
-					)}
+					renderItem={({ item }) => {
+						return item.isCompleted() ? (
+							<Card todoItem={item} removeItem={removeTodo} />
+						) : (
+							<></>
+						);
+					}}
 				/>
 				<StatusBar />
 			</View>
